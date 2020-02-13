@@ -1,9 +1,8 @@
 package cmd
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
+	"github.com/sundowndev/phoneinfoga/api"
 )
 
 var httpPort int
@@ -20,6 +19,6 @@ var serveCmd = &cobra.Command{
 	Use:   "serve",
 	Short: "Serve web client",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("serve")
+		api.Serve()
 	},
 }
