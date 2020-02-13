@@ -29,5 +29,4 @@ jobs:
           go test -v ./...
       - name: Lint
         run: |
-          chmod +x ./scripts/*.sh
-          ./scripts/lint.sh
+          gofmt -s -l .
