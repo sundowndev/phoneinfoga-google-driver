@@ -1,30 +1,30 @@
 package scanners
 
 import (
-	"os"
-
 	"github.com/nyaruka/phonenumbers"
 	"github.com/sundowndev/phoneinfoga/utils"
 )
 
 // LocalScan performs a local scan of a phone
 // number using phonenumbers library
-func LocalScan(number string) *Number {
+func LocalScan(number string) (res *Number, err error) {
+	utils.LoggerService.Infoln("Running local scan...")
+
 	country := utils.ParseCountryCode(number)
 
 	num, err := phonenumbers.Parse(number, country)
 
 	if err != nil {
-		utils.LoggerService.Errorln("The number is not valid")
-		os.Exit(0)
+		return nil, err
 	}
 
-	res := &Number{
-		local:         phonenumbers.Format(num, phonenumbers.NATIONAL),
-		international: phonenumbers.Format(num, phonenumbers.E164),
-		countryCode:   num.GetCountryCode(),
-		carrier:       num.GetPreferredDomesticCarrierCode(),
+	res = &Number{
+		Local:         phonenumbers.Format(num, phonenumbers.NATIONAL),
+		E164:          phonenumbers.Format(num, phonenumbers.E164),
+		International: phonenumbers.Format(num, phonenumbers.E164),
+		CountryCode:   num.GetCountryCode(),
+		Carrier:       num.GetPreferredDomesticCarrierCode(),
 	}
 
-	return res
+	return res, nil
 }
