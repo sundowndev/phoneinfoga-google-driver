@@ -7,12 +7,12 @@ import (
 )
 
 // NoAnsi is an option to disable colors for CLI logs
-var NoAnsi bool
+var NoAnsi bool // TODO
 
 var number string
-var input string
-var output string
-var scanner string
+var input string   // TODO
+var output string  // TODO
+var scanner string // TODO
 var recon bool
 
 func init() {
@@ -32,8 +32,10 @@ var scanCmd = &cobra.Command{
 	Use:   "scan",
 	Short: "Scan a phone number",
 	Run: func(cmd *cobra.Command, args []string) {
-		utils.LoggerService.Infoln("Scanning", number)
+		utils.LoggerService.Infoln("Scanning phone number", number)
 
-		scanners.LocalScan(number)
+		scanners.ScanCLI(number)
+
+		utils.LoggerService.Infoln("Scan finished.")
 	},
 }
