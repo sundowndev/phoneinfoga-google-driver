@@ -5,6 +5,13 @@
 <div align="center">
   <a href="https://github.com/sundowndev/PhoneInfoga-next/actions">
     <img src="https://img.shields.io/endpoint.svg?url=https://actions-badge.atrox.dev/sundowndev/PhoneInfoga-next/badge?ref=master&style=flat-square" alt="build status" />
+  </a>
+  <a href="https://goreportcard.com/report/github.com/sundowndev/phoneinfoga-next">
+    <img src="https://goreportcard.com/badge/github.com/sundowndev/phoneinfoga-next" alt="go report" />
+  </a>
+  <a href="https://codeclimate.com/github/sundowndev/PhoneInfoga-next/maintainability">
+    <img src="https://api.codeclimate.com/v1/badges/3259feb1c68df1cd4f71/maintainability" />
+  </a>
   <a href="https://github.com/sundowndev/PhoneInfoga-next/releases">
     <img src="https://img.shields.io/github/release/SundownDEV/PhoneInfoga-next.svg?style=flat-square" alt="Latest version" />
   </a>
