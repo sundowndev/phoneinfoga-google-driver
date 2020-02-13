@@ -16,7 +16,8 @@ func Serve(port int) {
 	router.Group("/api").
 		GET("/", healthHandler).
 		GET("/numbers", getAllNumbers).
-		GET("/numbers/:number/scan/local", localScan)
+		GET("/numbers/:number/scan/local", localScan).
+		GET("/numbers/:number/scan/numverify", numverifyScan)
 
 	router.Run(httpPort)
 }

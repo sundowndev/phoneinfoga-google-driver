@@ -13,7 +13,7 @@ func getAllNumbers(c *gin.Context) {
 
 func localScan(c *gin.Context) {
 	number := c.Param("number")
-	localScan, err := scanners.LocalScan(number)
+	result, err := scanners.LocalScan(number)
 
 	if err != nil {
 		c.JSON(500, errorResponse)
@@ -21,7 +21,21 @@ func localScan(c *gin.Context) {
 	}
 
 	c.JSON(200, gin.H{
-		"result": localScan,
+		"result": result,
+	})
+}
+
+func numverifyScan(c *gin.Context) {
+	number := c.Param("number")
+	result, err := scanners.NumverifyScan(number)
+
+	if err != nil {
+		c.JSON(500, errorResponse)
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"result": result,
 	})
 }
 
