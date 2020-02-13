@@ -3,19 +3,13 @@
 </p>
 
 <div align="center">
-  <a href="https://github.com/sundowndev/PhoneInfoga/actions">
-    <img src="https://img.shields.io/endpoint.svg?url=https://actions-badge.atrox.dev/sundowndev/PhoneInfoga/badge?ref=master&style=flat-square" alt="build status" />
-  <a href="https://hub.docker.com/r/sundowndev/phoneinfoga/builds">
-    <img src="https://img.shields.io/docker/cloud/build/sundowndev/phoneinfoga.svg?style=flat-square" alt="Build Status" />
+  <a href="https://github.com/sundowndev/PhoneInfoga-next/actions">
+    <img src="https://img.shields.io/endpoint.svg?url=https://actions-badge.atrox.dev/sundowndev/PhoneInfoga-next/badge?ref=master&style=flat-square" alt="build status" />
+  <a href="https://github.com/sundowndev/PhoneInfoga-next/releases">
+    <img src="https://img.shields.io/github/release/SundownDEV/PhoneInfoga-next.svg?style=flat-square" alt="Latest version" />
   </a>
-  <a href="#">
-    <img src="https://img.shields.io/badge/python-3.6-blue.svg?style=flat-square" alt="Python version" />
-  </a>
-  <a href="https://github.com/sundowndev/PhoneInfoga/releases">
-    <img src="https://img.shields.io/github/release/SundownDEV/PhoneInfoga.svg?style=flat-square" alt="Latest version" />
-  </a>
-  <a href="https://github.com/sundowndev/PhoneInfoga/blob/master/LICENSE">
-    <img src="https://img.shields.io/github/license/sundowndev/PhoneInfoga.svg?style=flat-square" alt="License" />
+  <a href="https://github.com/sundowndev/PhoneInfoga-next/blob/master/LICENSE">
+    <img src="https://img.shields.io/github/license/sundowndev/PhoneInfoga-next.svg?style=flat-square" alt="License" />
   </a>
 </div>
 
