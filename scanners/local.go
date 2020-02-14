@@ -23,6 +23,7 @@ func LocalScan(number string) (res *Number, err error) {
 		E164:          phonenumbers.Format(num, phonenumbers.E164),
 		International: phonenumbers.Format(num, phonenumbers.E164),
 		CountryCode:   num.GetCountryCode(),
+		Country:       country,
 		Carrier:       num.GetPreferredDomesticCarrierCode(),
 	}
 

@@ -12,6 +12,7 @@ type Number struct {
 	E164          string `json:"E164"`
 	International string `json:"international"`
 	CountryCode   int32  `json:"countryCode"`
+	Country       string `json:"country"`
 	Carrier       string `json:"carrier"`
 }
 
@@ -25,7 +26,7 @@ func localScanCLI(number string) *Number {
 
 	utils.LoggerService.Successln("Local format:", scan.Local)
 	utils.LoggerService.Successln("International format:", scan.International)
-	utils.LoggerService.Successf("Country found: %v", scan.CountryCode)
+	utils.LoggerService.Successf("Country found: +%v (%v)", scan.CountryCode, scan.Country)
 	utils.LoggerService.Successln("Carrier:", scan.Carrier)
 
 	return scan
@@ -43,8 +44,7 @@ func numverifyScanCLI(number string) {
 	utils.LoggerService.Successln("Number:", scan.Number)
 	utils.LoggerService.Successln("Local format:", scan.LocalFormat)
 	utils.LoggerService.Successln("International format:", scan.InternationalFormat)
-	utils.LoggerService.Successln("Country:", scan.CountryPrefix)
-	utils.LoggerService.Successln("Country code:", scan.CountryCode)
+	utils.LoggerService.Successf("Country code: %v (%v)", scan.CountryCode, scan.CountryPrefix)
 	utils.LoggerService.Successln("Country:", scan.CountryName)
 	utils.LoggerService.Successln("Location:", scan.Location)
 	utils.LoggerService.Successln("Carrier:", scan.Carrier)
