@@ -1,4 +1,4 @@
-package api
+package gui
 
 import (
 	"net/http"
@@ -18,8 +18,8 @@ func Serve(port int) {
 	router.Group("/api").
 		GET("/", healthHandler).
 		GET("/numbers", getAllNumbers).
-		GET("/numbers/:number/scan/local", localScan).
-		GET("/numbers/:number/scan/numverify", numverifyScan)
+		GET("/numbers/:number/scan/local", ValidateScanURL, localScan).
+		GET("/numbers/:number/scan/numverify", ValidateScanURL, numverifyScan)
 
 	dir, _ := os.Getwd()
 	assetsPath := dir + "/gui/client/dist"

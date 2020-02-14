@@ -3,7 +3,8 @@ module github.com/sundowndev/phoneinfoga
 go 1.13
 
 require (
-	github.com/IftekherSunny/go_country v0.0.0-20171031050552-fa1977b19cd2
+	github.com/IftekherSunny/go_country v0.0.0-20171031050552-fa1977b19cd2 // indirect
+	github.com/andreiavrammsd/validator v9.28.0+incompatible // indirect
 	github.com/biter777/countries v1.3.1 // indirect
 	github.com/elazarl/goproxy v0.0.0-20191011121108-aa519ddbe484 // indirect
 	github.com/fatih/color v1.9.0
