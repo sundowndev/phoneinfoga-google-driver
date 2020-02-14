@@ -7,13 +7,9 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// NoAnsi is an option to disable colors for CLI logs
-var NoAnsi bool // TODO
-
 var number string
-var input string   // TODO
-var output string  // TODO
-var scanner string // TODO
+var input string  // TODO
+var output string // TODO
 
 var rootCmd = &cobra.Command{
 	Use:   "phoneinfoga [COMMANDS] [OPTIONS]",

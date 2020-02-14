@@ -14,7 +14,6 @@ func init() {
 	reconCmd.PersistentFlags().StringVarP(&number, "number", "n", "", "The phone number to scan (E164 or international format)")
 	reconCmd.PersistentFlags().StringVarP(&input, "input", "i", "", "Text file containing a list of phone numbers to scan (one per line)")
 	reconCmd.PersistentFlags().StringVarP(&output, "output", "o", "", "Output to save scan results")
-	reconCmd.PersistentFlags().BoolVar(&NoAnsi, "no-ansi", false, "Disable colored output")
 }
 
 var reconCmd = &cobra.Command{
