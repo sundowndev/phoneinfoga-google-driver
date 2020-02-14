@@ -2,6 +2,7 @@ package api
 
 import (
 	"net/http"
+	"os"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -20,7 +21,19 @@ func Serve(port int) {
 		GET("/numbers/:number/scan/local", localScan).
 		GET("/numbers/:number/scan/numverify", numverifyScan)
 
-	router.StaticFS("/*", http.Dir("client"))
+	dir, _ := os.Getwd()
+	assetsPath := dir + "/gui/client/dist"
+
+	router.Static("/js", assetsPath+"/js")
+	router.Static("/css", assetsPath+"/css")
+	router.Static("/img", assetsPath+"/img")
+	router.StaticFile("/favicon.ico", assetsPath+"/favicon.ico")
+	router.LoadHTMLFiles(assetsPath + "/index.html")
+
+	router.GET("/", func(c *gin.Context) {
+		c.Header("Content-Type", "text/html; charset=utf-8")
+		c.HTML(http.StatusOK, "index.html", gin.H{})
+	})
 
 	router.Run(httpPort)
 }
