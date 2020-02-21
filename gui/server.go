@@ -24,9 +24,11 @@ func Serve(port int) {
 	dir, _ := os.Getwd()
 	assetsPath := dir + "/gui/client/dist"
 
-	router.Static("/js", assetsPath+"/js")
-	router.Static("/css", assetsPath+"/css")
-	router.Static("/img", assetsPath+"/img")
+	router.Group("/").
+		Static("/js", assetsPath+"/js").
+		Static("/css", assetsPath+"/css").
+		Static("/img", assetsPath+"/img")
+
 	router.StaticFile("/favicon.ico", assetsPath+"/favicon.ico")
 	router.LoadHTMLFiles(assetsPath + "/index.html")
 
