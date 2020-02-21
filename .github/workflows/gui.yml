@@ -21,9 +21,11 @@ jobs:
         yarn lint
     - name: Build
       run: |
+        cd gui/client
         yarn build
     - name: Test
       run: |
+        cd gui/client
         yarn test:unit
     # - name: Upload coverage to Codecov  
     #   uses: codecov/codecov-action@v1.0.2
