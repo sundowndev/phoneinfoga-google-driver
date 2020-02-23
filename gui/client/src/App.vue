@@ -16,10 +16,7 @@
 
           <b-collapse id="nav-text-collapse" is-nav>
             <b-navbar-nav>
-              <b-nav-text
-                >Advanced information gathering & OSINT tool for phone
-                numbers</b-nav-text
-              >
+              <b-nav-text>{{ config.appDescription }}</b-nav-text>
             </b-navbar-nav>
           </b-collapse>
 
@@ -43,7 +40,9 @@
             v-bind:key="i"
             show
             variant="danger"
-            dismissible>{{ err.message }}</b-alert>
+            dismissible
+            >{{ err.message }}</b-alert
+          >
 
           <router-view />
         </b-col>
@@ -55,7 +54,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapState } from "vuex";
-import config from "../config";
+import config from "@/config";
 
 export default Vue.extend({
   data: () => ({ config }),

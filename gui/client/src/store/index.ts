@@ -1,12 +1,11 @@
 import axios, { AxiosResponse } from "axios";
 import Vue from "vue";
 import Vuex, { Store } from "vuex";
-import config from "../../config";
+import config from "@/config";
 
 Vue.use(Vuex);
 
 interface Error {
-  code: string;
   message: string;
 }
 
@@ -36,7 +35,10 @@ const store: Store<StoreInterface> = new Vuex.Store({
   },
   getters: {},
   actions: {
-    async runScanner(context, scanner): Promise<AxiosResponse |void> {
+    async runScanner(
+      context,
+      scanner: string
+    ): Promise<AxiosResponse<unknown> | void> {
       try {
         const res = await axios.get(
           `${config.apiUrl}/numbers/${context.state.number}/scan/${scanner}`

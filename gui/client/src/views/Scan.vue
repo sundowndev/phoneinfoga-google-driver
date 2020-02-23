@@ -10,9 +10,9 @@
         <b-form-input
           id="input-number"
           v-model="form.number"
-          type="number"
+          type="text"
           required
-          placeholder="+33678132393"
+          placeholder="e.g: 33678132393"
         ></b-form-input>
       </b-form-group>
 
@@ -22,28 +22,41 @@
           v-for="scanner in scanners"
           v-bind:key="scanner.name"
           v-on:click="runScan(scanner)"
+          >{{ scanner.name }}</b-button
         >
-          {{ scanner.name }}
-        </b-button>
+        <b-button variant="danger" v-on:click="clear">Clear results</b-button>
       </div>
     </b-form>
 
     <hr />
 
-    <div v-for="scanner in scanners" v-bind:key="scanner.name" :id="scanner.id">
+    <div
+      v-for="scanner in scanners"
+      v-bind:key="scanner.name"
+      :id="scanner.id"
+      v-show="scanner.loading || scanner.data.length > 0"
+    >
       <h3>{{ scanner.name }}</h3>
-      <p>scan here</p>
+      <i v-show="scanner.loading">Running scan for {{ form.number }}...</i>
+      <b-table
+        outlined
+        :stacked="scanner.data.length == 1"
+        :items="scanner.data"
+        v-show="scanner.data.length > 0"
+      ></b-table>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import { mapState, mapMutations } from "vuex";
+import { mapMutations } from "vuex";
 
 interface Scanner {
   id: string;
   name: string;
+  data: unknown[];
+  loading: boolean;
 }
 
 interface ScanData {
@@ -63,18 +76,26 @@ export default Vue.extend({
         number: ""
       },
       scanners: [
-        { id: "local", name: "Local scan" },
-        { id: "numverify", name: "Numverify" },
-        { id: "googlesearch", name: "Google search" }
+        { id: "local", name: "Local scan", data: [], loading: false },
+        { id: "numverify", name: "Numverify", data: [], loading: false },
+        { id: "googlesearch", name: "Google search", data: [], loading: false }
       ]
     };
   },
   methods: {
+    clear() {
+      for (const scanner of this.scanners) {
+        scanner.loading = false;
+        scanner.data = [];
+      }
+    },
     async runScan(scanner: Scanner) {
+      scanner.loading = true;
       this.$store.commit("setNumber", this.form.number);
 
       const res = await this.$store.dispatch("runScanner", scanner.id);
-      console.log(res);
+      scanner.data.push(res.result);
+      scanner.loading = false;
     },
     onSubmit(evt: any) {
       evt.preventDefault();
