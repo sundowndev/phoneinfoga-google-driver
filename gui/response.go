@@ -17,7 +17,7 @@ func errorResponse(msg ...string) map[string]interface{} {
 	var message string
 
 	if len(msg) == 0 {
-		message = "An error occured"
+		message = "An error occurred"
 	} else {
 		message = strings.Join(msg, "")
 	}
