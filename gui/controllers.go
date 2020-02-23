@@ -16,7 +16,7 @@ func localScan(c *gin.Context) {
 	result, err := scanners.LocalScan(number)
 
 	if err != nil {
-		c.JSON(500, errorResponse)
+		c.JSON(500, errorResponse("The number is not valid"))
 		return
 	}
 

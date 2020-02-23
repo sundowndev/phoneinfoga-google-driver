@@ -1,6 +1,10 @@
 package gui
 
-import "github.com/gin-gonic/gin"
+import (
+	"strings"
+
+	"github.com/gin-gonic/gin"
+)
 
 func successResponse() map[string]interface{} {
 	return gin.H{
@@ -9,9 +13,17 @@ func successResponse() map[string]interface{} {
 	}
 }
 
-func errorResponse() map[string]interface{} {
+func errorResponse(msg ...string) map[string]interface{} {
+	var message string
+
+	if len(msg) == 0 {
+		message = "An error occured"
+	} else {
+		message = strings.Join(msg, "")
+	}
+
 	return gin.H{
 		"success": false,
-		"message": "An error occured",
+		"message": message,
 	}
 }
