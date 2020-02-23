@@ -37,5 +37,12 @@ func Serve(port int) {
 		c.HTML(http.StatusOK, "index.html", gin.H{})
 	})
 
+	router.Use(func(c *gin.Context) {
+		c.JSON(404, gin.H{
+			"success": false,
+			"message": "Resource not found",
+		})
+	})
+
 	router.Run(httpPort)
 }

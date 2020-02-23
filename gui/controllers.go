@@ -30,7 +30,7 @@ func numverifyScan(c *gin.Context) {
 	result, err := scanners.NumverifyScan(number)
 
 	if err != nil {
-		c.JSON(500, errorResponse)
+		c.JSON(500, errorResponse())
 		return
 	}
 
