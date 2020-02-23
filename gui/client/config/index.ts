@@ -1,3 +1,4 @@
 export default {
-    appName: 'PhoneInfoga'
+    appName: 'PhoneInfoga',
+    apiUrl: '/api',
 }
