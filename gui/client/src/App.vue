@@ -41,6 +41,7 @@
             show
             variant="danger"
             dismissible
+            fade
             >{{ err.message }}</b-alert
           >
 

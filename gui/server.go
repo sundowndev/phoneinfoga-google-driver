@@ -19,7 +19,8 @@ func Serve(port int) {
 		GET("/", healthHandler).
 		GET("/numbers", getAllNumbers).
 		GET("/numbers/:number/scan/local", ValidateScanURL, localScan).
-		GET("/numbers/:number/scan/numverify", ValidateScanURL, numverifyScan)
+		GET("/numbers/:number/scan/numverify", ValidateScanURL, numverifyScan).
+		GET("/numbers/:number/scan/googlesearch", ValidateScanURL, googleSearchScan)
 
 	dir, _ := os.Getwd()
 	assetsPath := dir + "/gui/client/dist"

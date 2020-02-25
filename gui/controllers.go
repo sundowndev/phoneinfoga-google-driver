@@ -39,6 +39,23 @@ func numverifyScan(c *gin.Context) {
 	})
 }
 
+func googleSearchScan(c *gin.Context) {
+	number := c.Param("number")
+
+	n, err := scanners.LocalScan(number)
+
+	if err != nil {
+		c.JSON(500, errorResponse("The number is not valid"))
+		return
+	}
+
+	result := scanners.GoogleSearchScan(n)
+
+	c.JSON(200, gin.H{
+		"result": result,
+	})
+}
+
 func healthHandler(c *gin.Context) {
 	c.JSON(200, successResponse())
 }
