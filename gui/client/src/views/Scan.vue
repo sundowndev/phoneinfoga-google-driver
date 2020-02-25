@@ -22,8 +22,7 @@
           v-for="scanner in scanners"
           v-bind:key="scanner.name"
           v-on:click="runScan(scanner)"
-          >{{ scanner.name }}</b-button
-        >
+        >{{ scanner.name }}</b-button>
         <b-button variant="danger" v-on:click="clear">Clear results</b-button>
       </div>
     </b-form>
@@ -45,12 +44,15 @@
         v-show="scanner.data.length > 0"
       ></b-table>
     </div>
+
+    <GoogleSearch/>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import { mapMutations } from "vuex";
+import GoogleSearch from "../components/GoogleSearch.vue";
 
 interface Scanner {
   id: string;
@@ -67,6 +69,7 @@ interface ScanData {
 }
 
 export default Vue.extend({
+  components: { GoogleSearch },
   computed: {
     ...mapMutations(["pushError"])
   },
@@ -89,7 +92,12 @@ export default Vue.extend({
         scanner.data = [];
       }
     },
-    async runScan(scanner: Scanner) {
+    async runScan(scanner: Scanner): Promise<void> {
+      if (this.form.number.length < 2) {
+        this.$store.commit("pushError", { message: "Number is not valid." });
+        return;
+      }
+
       scanner.loading = true;
       this.$store.commit("setNumber", this.form.number);
 

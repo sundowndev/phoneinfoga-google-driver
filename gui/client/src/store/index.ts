@@ -1,37 +1,37 @@
-import axios, { AxiosResponse } from "axios";
-import Vue from "vue";
-import Vuex, { Store } from "vuex";
-import config from "@/config";
+import axios, { AxiosResponse } from 'axios';
+import Vue from 'vue';
+import Vuex, { Store } from 'vuex';
+import config from '@/config';
 
 Vue.use(Vuex);
 
-interface Error {
+interface ErrorAlert {
   message: string;
 }
 
 interface StoreInterface {
   number: string;
-  errors: Error[];
+  errors: ErrorAlert[];
 }
 
 const store: Store<StoreInterface> = new Vuex.Store({
   state: {
-    number: "",
-    errors: [] as Error[]
+    number: '',
+    errors: [] as ErrorAlert[],
   },
   mutations: {
-    pushError(state, err): void {
-      state.errors.push(err);
+    pushError(state, error: ErrorAlert): void {
+      state.errors.push(error);
     },
-    setNumber(state, number): void {
+    setNumber(state, number: string): void {
       state.number = number;
     },
     resetState(state) {
-      state.number = "";
+      state.number = '';
       state.errors = [];
 
       return state;
-    }
+    },
   },
   getters: {},
   actions: {
@@ -46,14 +46,14 @@ const store: Store<StoreInterface> = new Vuex.Store({
 
         return res.data;
       } catch (e) {
-        context.commit("pushError", { code: "ok", message: e });
+        context.commit('pushError', { message: e });
       }
     },
     resetState(context): void {
-      context.commit("resetState");
-    }
+      context.commit('resetState');
+    },
   },
-  modules: {}
+  modules: {},
 });
 
 export default store;
