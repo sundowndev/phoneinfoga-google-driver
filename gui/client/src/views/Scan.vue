@@ -17,11 +17,18 @@
         ></b-form-input>
       </b-form-group>
 
-      <b-button size="sm" variant="dark" v-on:click="runScans" :disabled="loading">
+      <b-button
+        size="sm"
+        variant="dark"
+        v-on:click="runScans"
+        :disabled="loading"
+      >
         <b-icon-play-fill></b-icon-play-fill>Run scan
       </b-button>
 
-      <b-button variant="light" size="sm" v-on:click="clearData">Clear results</b-button>
+      <b-button variant="light" size="sm" v-on:click="clearData"
+        >Clear results</b-button
+      >
     </b-form>
 
     <hr />
@@ -79,7 +86,7 @@ export default Vue.extend({
     //   scanner.data.push(res.result);
     //   scanner.loading = false;
     // },
-    async runScans(scanner: Scanner): Promise<void> {
+    async runScans(): Promise<void> {
       if (this.number.length < 2) {
         this.$store.commit("pushError", { message: "Number is not valid." });
         return;
