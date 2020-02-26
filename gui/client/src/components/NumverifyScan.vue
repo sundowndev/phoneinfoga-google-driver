@@ -1,30 +1,20 @@
 <template>
   <div v-if="loading || data.length > 0">
-    <h3>
-      {{ name }}
-      <small>
-        <b-button variant="outline-primary" size="sm" v-on:click="openLinks">Open all links</b-button>
-      </small>
-    </h3>
+    <h3>{{ name }}</h3>
 
     <i v-if="loading">Loading...</i>
 
     <b-button
       size="sm"
       variant="dark"
-      v-b-toggle.googlesearch-collapse
+      v-b-toggle.numverify-collapse
       v-show="data.length > 0"
     >Toggle results</b-button>
-    <b-collapse id="googlesearch-collapse" class="mt-2">
-      <b-list-group>
-        <b-list-group-item
-          :href="value.URL"
-          target="blank"
-          v-for="(value, i) in data"
-          v-bind:key="i"
-        >{{ value.dork }}</b-list-group-item>
-      </b-list-group>
+    <b-collapse id="numverify-collapse" class="mt-2">
+      <b-table outlined :stacked="data.length == 1" :items="data" v-show="data.length > 0"></b-table>
     </b-collapse>
+
+    <hr />
   </div>
 </template>
 
@@ -34,7 +24,7 @@ import axios, { AxiosResponse } from "axios";
 import { mapMutations } from "vuex";
 import config from "@/config";
 
-interface googleSearchScanResponse {
+interface localScanResponse {
   number: string;
   dork: string;
   URL: string;
@@ -42,9 +32,9 @@ interface googleSearchScanResponse {
 
 @Component
 export default class GoogleSearch extends Vue {
-  id = "googlesearch";
-  name = "Google search";
-  data: googleSearchScanResponse[] = [];
+  id = "numverify";
+  name = "Numverify scan";
+  data: localScanResponse[] = [];
   loading = false;
   computed = {
     ...mapMutations(["pushError"])
@@ -58,18 +48,12 @@ export default class GoogleSearch extends Vue {
         `${config.apiUrl}/numbers/13152841580/scan/${this.id}`
       );
 
-      this.data = res.data.result;
+      this.data.push(res.data.result);
     } catch (e) {
       this.$store.commit("pushError", { message: e });
     }
 
     this.loading = false;
-  }
-
-  openLinks(): void {
-    for (const result of this.data) {
-      window.open(result.URL, "_blank");
-    }
   }
 }
 </script>
