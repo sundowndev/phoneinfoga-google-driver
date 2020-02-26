@@ -8,7 +8,6 @@ import (
 	"strings"
 
 	phoneiso3166 "github.com/onlinecity/go-phone-iso3166"
-	"github.com/sundowndev/go-covermyass/utils"
 )
 
 // FormatNumber ...
@@ -18,7 +17,7 @@ func FormatNumber(n string) (num string) {
 	re := regexp.MustCompile("^[0-9]+$")
 
 	if len(re.FindString(num)) == 0 {
-		utils.LoggerService.Error("Number is not valid.")
+		LoggerService.Errorln("Number is not valid.")
 		os.Exit(0)
 	}
 
