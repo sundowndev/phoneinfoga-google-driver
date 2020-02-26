@@ -1,8 +1,8 @@
-package gui
+package api
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/sundowndev/phoneinfoga/scanners"
+	"github.com/sundowndev/phoneinfoga/pkg/scanners"
 )
 
 func getAllNumbers(c *gin.Context) {

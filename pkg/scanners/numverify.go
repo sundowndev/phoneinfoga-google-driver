@@ -10,7 +10,7 @@ import (
 	"net/url"
 
 	"github.com/parnurzeal/gorequest"
-	"github.com/sundowndev/phoneinfoga/utils"
+	"github.com/sundowndev/phoneinfoga/pkg/utils"
 	// "golang.org/x/net/html"
 )
 
