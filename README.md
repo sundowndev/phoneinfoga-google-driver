@@ -42,7 +42,8 @@ PhoneInfoga is one of the most advanced tools to scan phone numbers using only f
 - Scan several numbers at once
 - Use custom formatting for more effective OSINT reconnaissance
 - Automatic footprinting on several custom formats
-- **NEW**: Serve a web GUI to inspect results from the browser
+- **NEW**: Serve a web client along with a REST API to run scans from the browser
+- **NEW**: Run your own web instance as a service
 
 ![Footprinting process](https://i.imgur.com/qCkgzz8.png)
 
