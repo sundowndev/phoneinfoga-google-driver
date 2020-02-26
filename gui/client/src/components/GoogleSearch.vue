@@ -3,7 +3,9 @@
     <h3>
       {{ name }}
       <small>
-        <b-button variant="outline-primary" size="sm" v-on:click="openLinks">Open all links</b-button>
+        <b-button variant="outline-primary" size="sm" v-on:click="openLinks"
+          >Open all links</b-button
+        >
       </small>
     </h3>
 
@@ -14,7 +16,8 @@
       variant="dark"
       v-b-toggle.googlesearch-collapse
       v-show="data.length > 0"
-    >Toggle results</b-button>
+      >Toggle results</b-button
+    >
     <b-collapse id="googlesearch-collapse" class="mt-2">
       <b-list-group>
         <b-list-group-item
@@ -22,7 +25,8 @@
           target="blank"
           v-for="(value, i) in data"
           v-bind:key="i"
-        >{{ value.dork }}</b-list-group-item>
+          >{{ value.dork }}</b-list-group-item
+        >
       </b-list-group>
     </b-collapse>
   </div>
@@ -34,7 +38,7 @@ import axios, { AxiosResponse } from "axios";
 import { mapMutations } from "vuex";
 import config from "@/config";
 
-interface googleSearchScanResponse {
+interface GoogleSearchScanResponse {
   number: string;
   dork: string;
   URL: string;
@@ -44,7 +48,7 @@ interface googleSearchScanResponse {
 export default class GoogleSearch extends Vue {
   id = "googlesearch";
   name = "Google search";
-  data: googleSearchScanResponse[] = [];
+  data: GoogleSearchScanResponse[] = [];
   loading = false;
   computed = {
     ...mapMutations(["pushError"])
@@ -54,7 +58,7 @@ export default class GoogleSearch extends Vue {
     this.loading = true;
 
     try {
-      const res = await axios.get(
+      const res: AxiosResponse = await axios.get(
         `${config.apiUrl}/numbers/13152841580/scan/${this.id}`
       );
 

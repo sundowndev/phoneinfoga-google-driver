@@ -9,9 +9,15 @@
       variant="dark"
       v-b-toggle.numverify-collapse
       v-show="data.length > 0"
-    >Toggle results</b-button>
+      >Toggle results</b-button
+    >
     <b-collapse id="numverify-collapse" class="mt-2">
-      <b-table outlined :stacked="data.length == 1" :items="data" v-show="data.length > 0"></b-table>
+      <b-table
+        outlined
+        :stacked="data.length == 1"
+        :items="data"
+        v-show="data.length > 0"
+      ></b-table>
     </b-collapse>
 
     <hr />
@@ -24,17 +30,24 @@ import axios, { AxiosResponse } from "axios";
 import { mapMutations } from "vuex";
 import config from "@/config";
 
-interface localScanResponse {
+interface NumverifyScanResponse {
+  valid: boolean;
   number: string;
-  dork: string;
-  URL: string;
+  localFormat: string;
+  internationalFormat: string;
+  countryPrefix: string;
+  countryCode: string;
+  countryName: string;
+  location: string;
+  carrier: string;
+  lineType: string;
 }
 
 @Component
 export default class GoogleSearch extends Vue {
   id = "numverify";
   name = "Numverify scan";
-  data: localScanResponse[] = [];
+  data: NumverifyScanResponse[] = [];
   loading = false;
   computed = {
     ...mapMutations(["pushError"])
@@ -44,7 +57,7 @@ export default class GoogleSearch extends Vue {
     this.loading = true;
 
     try {
-      const res = await axios.get(
+      const res: AxiosResponse = await axios.get(
         `${config.apiUrl}/numbers/13152841580/scan/${this.id}`
       );
 

@@ -4,7 +4,12 @@
 
     <i v-if="loading">Loading...</i>
 
-    <b-table outlined :stacked="data.length == 1" :items="data" v-show="data.length > 0"></b-table>
+    <b-table
+      outlined
+      :stacked="data.length == 1"
+      :items="data"
+      v-show="data.length > 0"
+    ></b-table>
   </div>
 </template>
 
@@ -14,7 +19,7 @@ import axios, { AxiosResponse } from "axios";
 import { mapMutations } from "vuex";
 import config from "@/config";
 
-interface localScanResponse {
+interface LocalScanResponse {
   number: string;
   dork: string;
   URL: string;
@@ -24,7 +29,7 @@ interface localScanResponse {
 export default class GoogleSearch extends Vue {
   id = "local";
   name = "Local scan";
-  data: localScanResponse[] = [];
+  data: LocalScanResponse[] = [];
   loading = false;
   computed = {
     ...mapMutations(["pushError"])
@@ -34,7 +39,7 @@ export default class GoogleSearch extends Vue {
     this.loading = true;
 
     try {
-      const res = await axios.get(
+      const res: AxiosResponse = await axios.get(
         `${config.apiUrl}/numbers/13152841580/scan/${this.id}`
       );
 
