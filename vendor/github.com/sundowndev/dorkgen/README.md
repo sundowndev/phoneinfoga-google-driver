@@ -1,11 +1,11 @@
 # Dorkgen
 
 <div align="left">
-  <a href="https://github.com/sundowndev/dorkgen/actions">
-    <img src="https://img.shields.io/endpoint.svg?url=https://actions-badge.atrox.dev/sundowndev/dorkgen/badge?ref=master" alt="build status" />
-  </a>
   <a href="https://godoc.org/github.com/sundowndev/dorkgen">
     <img src="https://godoc.org/github.com/sundowndev/dorkgen?status.svg" alt="GoDoc">
+  </a>
+  <a href="https://github.com/sundowndev/dorkgen/actions">
+    <img src="https://img.shields.io/endpoint.svg?url=https://actions-badge.atrox.dev/sundowndev/dorkgen/badge?ref=master" alt="build status" />
   </a>
   <a href="https://goreportcard.com/report/github.com/sundowndev/dorkgen">
     <img src="https://goreportcard.com/badge/github.com/sundowndev/dorkgen" alt="go report" />
@@ -13,11 +13,11 @@
   <a href="https://codeclimate.com/github/sundowndev/dorkgen/maintainability">
     <img src="https://api.codeclimate.com/v1/badges/e827d7cc994c6519d319/maintainability" />
   </a>
+  <a href="https://codecov.io/gh/sundowndev/dorkgen">
+    <img src="https://codecov.io/gh/sundowndev/dorkgen/branch/master/graph/badge.svg" />
+  </a>
   <a href="https://github.com/sundowndev/dorkgen/releases">
     <img src="https://img.shields.io/github/release/SundownDEV/dorkgen.svg" alt="Latest version" />
-  </a>
-  <a href="https://github.com/sundowndev/dorkgen/blob/master/LICENSE">
-    <img src="https://img.shields.io/github/license/sundowndev/dorkgen.svg" alt="License" />
   </a>
 </div>
 
@@ -31,43 +31,66 @@ go get github.com/sundowndev/dorkgen
 
 ## Usage
 
+[Try it in the Go playground](https://play.golang.org/p/ck_hEoX8cTK)
+
+#### Get started
+
 ```go
 package main
 
-import (
-	"fmt"
-  
-  	"github.com/sundowndev/dorkgen"
-)
+import "github.com/sundowndev/dorkgen"
 
 func main() {
-  dork := dorkgen.Google{}
-  // dork := dorkgen.DuckDuckGo{}
-  // dork := dorkgen.Bing{}
- 
-  dork.Site("example.com").Intext("06792489265").ToString()
-  // site:example.com "06792489265"
+  dork := &dorkgen.GoogleSearch{}
+  // dork := &dorkgen.DuckDuckGo{}
+  // dork := &dorkgen.Bing{}
 
-  dork.Site("example.com").Or().Intext("06792489265").ToString()
-  // site:example.com OR "06792489265"
-
-  dork.Site("facebook.*").Exclude("site:facebook.com").ToUrl()
-  // https://www.google.com/search?q=site%3A"facebook.*"+-site%3Afacebook.com
+  dork.Site("example.com").Intext("text").ToString()
+  // returns: site:example.com "text"
 }
 ```
 
-## API
+#### Operators
 
 ```go
-type EngineFactory interface {
-	Site(string) *GoogleSearch
-	ToString() string
-	Intext(string) *GoogleSearch
-	Inurl(string) *GoogleSearch
-	Filetype(string) *GoogleSearch
-	Cache(string) *GoogleSearch
-	Related(string) *GoogleSearch
-	Ext(string) *GoogleSearch
-	Exclude(string) *GoogleSearch
+dork.Site("facebook.com").Or().Site("twitter.com").ToString()
+// returns: site:facebook.com OR site:twitter.com
+
+dork.Intext("facebook").And().Intext("twitter").ToString()
+// returns: "facebook" AND "twitter"
+```
+
+#### Exclude results
+
+```go
+dork.
+  Exclude((&dorkgen.GoogleSearch{}).
+    Site("example.com").
+    ToString()).
+  Site("example.*").
+  Or().
+  Intext("text")
+// returns: -site:example.com site:example.* OR "text"
+```
+
+#### Group tags along with operators
+
+```go
+  dork.
+    Group((&dorkgen.GoogleSearch{}).
+      Site("facebook.com").
+      Or().
+      Site("twitter.com").
+      ToString()).
+    Intext("wtf").
+    ToString()
+  // returns: (site:facebook.com OR site:twitter.com) "wtf"
 }
+```
+
+#### URL conversion
+
+```go
+dork.Site("facebook.*").Exclude("site:facebook.com").ToURL()
+// returns: https://www.google.com/search?q=site%3A"facebook.*"+-site%3Afacebook.com
 ```
