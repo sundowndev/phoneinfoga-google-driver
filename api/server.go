@@ -1,4 +1,4 @@
-package gui
+package api
 
 import (
 	"net/http"
@@ -23,7 +23,7 @@ func Serve(port int) {
 		GET("/numbers/:number/scan/googlesearch", ValidateScanURL, googleSearchScan)
 
 	dir, _ := os.Getwd()
-	assetsPath := dir + "/gui/client/dist"
+	assetsPath := dir + "/client/dist"
 
 	router.Group("/").
 		Static("/js", assetsPath+"/js").

@@ -3,7 +3,7 @@ package scanners
 import (
 	"os"
 
-	"github.com/sundowndev/phoneinfoga/utils"
+	"github.com/sundowndev/phoneinfoga/pkg/utils"
 )
 
 // Number is a phone number

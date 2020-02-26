@@ -2,7 +2,7 @@ package scanners
 
 import (
 	"github.com/sundowndev/dorkgen"
-	"github.com/sundowndev/phoneinfoga/utils"
+	"github.com/sundowndev/phoneinfoga/pkg/utils"
 )
 
 // GoogleSearchDork is the common format for dork requests
