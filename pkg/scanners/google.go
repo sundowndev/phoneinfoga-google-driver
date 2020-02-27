@@ -14,10 +14,11 @@ type GoogleSearchDork struct {
 
 // GoogleSearchScan ...
 func GoogleSearchScan(number *Number) []*GoogleSearchDork {
-	utils.LoggerService.Infoln("Running Google search scan...")
+	utils.LoggerService.Infoln("Generating Google search dork requests...")
 
-	dorks := []*dorkgen.GoogleSearch{
-		// TODO: Disposable phone numbers
+	// TODO: Disposable phone numbers
+	DisposableProviders := []*dorkgen.GoogleSearch{}
+	Individuals := []*dorkgen.GoogleSearch{
 		// TODO: Individuals
 		(&dorkgen.GoogleSearch{}).
 			Intext(number.International).
@@ -25,7 +26,8 @@ func GoogleSearchScan(number *Number) []*GoogleSearchDork {
 			Intext(number.E164).
 			Or().
 			Intext(number.Local),
-		// Social medias
+	}
+	SocialMedias := []*dorkgen.GoogleSearch{
 		(&dorkgen.GoogleSearch{}).
 			Site("facebook.com").
 			Intext(number.International).
@@ -54,10 +56,11 @@ func GoogleSearchScan(number *Number) []*GoogleSearchDork {
 			Intext(number.E164).
 			Or().
 			Intext(number.Local),
-		// Reputation
-		// (&dorkgen.GoogleSearch{}).
-		// 	Site("whosenumber.info").
-		// 	Intext(number.E164).
+	}
+	Reputation := []*dorkgen.GoogleSearch{
+		(&dorkgen.GoogleSearch{}).
+			Site("whosenumber.info").
+			Intext(number.E164),
 		// 	Intitle("who called"),
 		(&dorkgen.GoogleSearch{}).
 			// Intitle("Phone Fraud").
@@ -95,6 +98,12 @@ func GoogleSearchScan(number *Number) []*GoogleSearchDork {
 			Site("uk.popularphotolook.com").
 			Inurl(number.Local),
 	}
+
+	dorks := []*dorkgen.GoogleSearch{}
+	dorks = append(dorks, DisposableProviders...)
+	dorks = append(dorks, Individuals...)
+	dorks = append(dorks, SocialMedias...)
+	dorks = append(dorks, Reputation...)
 
 	results := []*GoogleSearchDork{}
 

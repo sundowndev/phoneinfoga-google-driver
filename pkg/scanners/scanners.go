@@ -51,9 +51,18 @@ func numverifyScanCLI(number string) {
 	utils.LoggerService.Successln("Line type:", scan.LineType)
 }
 
+func googlesearchScanCLI(number *Number) {
+	scan := GoogleSearchScan(number)
+
+	for _, a := range scan {
+		utils.LoggerService.Successf(`Link: %v`, a.URL)
+	}
+}
+
 // ScanCLI Run scans with CLI output
 func ScanCLI(number string) {
 	num := localScanCLI(number)
 
 	numverifyScanCLI(num.E164)
+	googlesearchScanCLI(num)
 }
