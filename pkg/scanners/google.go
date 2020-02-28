@@ -12,13 +12,13 @@ type GoogleSearchDork struct {
 	URL    string
 }
 
-// GoogleSearchScan ...
-func GoogleSearchScan(number *Number) []*GoogleSearchDork {
-	utils.LoggerService.Infoln("Generating Google search dork requests...")
-
+func getDisposableProvidersDorks(number *Number) []*dorkgen.GoogleSearch {
 	// TODO: Disposable phone numbers
-	DisposableProviders := []*dorkgen.GoogleSearch{}
-	Individuals := []*dorkgen.GoogleSearch{
+	return []*dorkgen.GoogleSearch{}
+}
+
+func getIndividualsDorks(number *Number) []*dorkgen.GoogleSearch {
+	return []*dorkgen.GoogleSearch{
 		// TODO: Individuals
 		(&dorkgen.GoogleSearch{}).
 			Intext(number.International).
@@ -27,7 +27,10 @@ func GoogleSearchScan(number *Number) []*GoogleSearchDork {
 			Or().
 			Intext(number.Local),
 	}
-	SocialMedias := []*dorkgen.GoogleSearch{
+}
+
+func getSocialMediaDorks(number *Number) []*dorkgen.GoogleSearch {
+	return []*dorkgen.GoogleSearch{
 		(&dorkgen.GoogleSearch{}).
 			Site("facebook.com").
 			Intext(number.International).
@@ -57,11 +60,14 @@ func GoogleSearchScan(number *Number) []*GoogleSearchDork {
 			Or().
 			Intext(number.Local),
 	}
-	Reputation := []*dorkgen.GoogleSearch{
+}
+
+func getReputationDorks(number *Number) []*dorkgen.GoogleSearch {
+	return []*dorkgen.GoogleSearch{
 		(&dorkgen.GoogleSearch{}).
 			Site("whosenumber.info").
 			Intext(number.E164),
-		// 	Intitle("who called"),
+		// Intitle("who called"),
 		(&dorkgen.GoogleSearch{}).
 			// Intitle("Phone Fraud").
 			Intext(number.International).
@@ -98,12 +104,18 @@ func GoogleSearchScan(number *Number) []*GoogleSearchDork {
 			Site("uk.popularphotolook.com").
 			Inurl(number.Local),
 	}
+}
+
+// GoogleSearchScan creates several Google requests to search footprints of
+// the number online through Google search.
+func GoogleSearchScan(number *Number) []*GoogleSearchDork {
+	utils.LoggerService.Infoln("Generating Google search dork requests...")
 
 	dorks := []*dorkgen.GoogleSearch{}
-	dorks = append(dorks, DisposableProviders...)
-	dorks = append(dorks, Individuals...)
-	dorks = append(dorks, SocialMedias...)
-	dorks = append(dorks, Reputation...)
+	dorks = append(dorks, getDisposableProvidersDorks(number)...)
+	dorks = append(dorks, getIndividualsDorks(number)...)
+	dorks = append(dorks, getSocialMediaDorks(number)...)
+	dorks = append(dorks, getReputationDorks(number)...)
 
 	results := []*GoogleSearchDork{}
 
