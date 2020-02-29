@@ -3,6 +3,7 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/sundowndev/phoneinfoga/pkg/scanners"
+	"github.com/sundowndev/phoneinfoga/pkg/utils"
 )
 
 func getAllNumbers(c *gin.Context) {
@@ -13,6 +14,8 @@ func getAllNumbers(c *gin.Context) {
 
 func localScan(c *gin.Context) {
 	number := c.Param("number")
+
+	number = utils.FormatNumber(number)
 	result, err := scanners.LocalScan(number)
 
 	if err != nil {
@@ -27,6 +30,8 @@ func localScan(c *gin.Context) {
 
 func numverifyScan(c *gin.Context) {
 	number := c.Param("number")
+
+	number = utils.FormatNumber(number)
 	result, err := scanners.NumverifyScan(number)
 
 	if err != nil {
@@ -42,6 +47,7 @@ func numverifyScan(c *gin.Context) {
 func googleSearchScan(c *gin.Context) {
 	number := c.Param("number")
 
+	number = utils.FormatNumber(number)
 	n, err := scanners.LocalScan(number)
 
 	if err != nil {
