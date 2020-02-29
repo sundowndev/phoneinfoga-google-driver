@@ -54,8 +54,8 @@ func numverifyScanCLI(number string) {
 func googlesearchScanCLI(number *Number) {
 	scan := GoogleSearchScan(number)
 
-	for _, a := range scan {
-		utils.LoggerService.Successf(`Link: %v`, a.URL)
+	for _, dork := range scan {
+		utils.LoggerService.Successf(`Link: %v`, dork.URL)
 	}
 }
 
