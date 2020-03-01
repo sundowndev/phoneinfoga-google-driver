@@ -12,16 +12,18 @@ type GoogleSearchDork struct {
 	URL    string
 }
 
-// GoogleSearchResponse ...
+// GoogleSearchResponse is the output of Google search scanner.
+// It contains all dorks created ordered by types.
 type GoogleSearchResponse struct {
-	SocialMedia []*GoogleSearchDork `json:"socialMedia"`
+	SocialMedia         []*GoogleSearchDork `json:"socialMedia"`
 	DisposableProviders []*GoogleSearchDork `json:"disposableProviders"`
-	Reputation []*GoogleSearchDork `json:"reputation"`
-	Individuals []*GoogleSearchDork `json:"individuals"`
+	Reputation          []*GoogleSearchDork `json:"reputation"`
+	Individuals         []*GoogleSearchDork `json:"individuals"`
+	General             []*GoogleSearchDork `json:"general"`
 }
 
 func getDisposableProvidersDorks(number *Number) (results []*GoogleSearchDork) {
-	var dorks= []*dorkgen.GoogleSearch{
+	var dorks = []*dorkgen.GoogleSearch{
 		(&dorkgen.GoogleSearch{}).
 			Site("hs3x.com").
 			Intext(number.International),
@@ -139,13 +141,7 @@ func getDisposableProvidersDorks(number *Number) (results []*GoogleSearchDork) {
 }
 
 func getIndividualsDorks(number *Number, formats ...string) (results []*GoogleSearchDork) {
-	var dorks= []*dorkgen.GoogleSearch{
-		(&dorkgen.GoogleSearch{}).
-			Intext(number.International).
-			Or().
-			Intext(number.E164).
-			Or().
-			Intext(number.Local),
+	var dorks = []*dorkgen.GoogleSearch{
 		(&dorkgen.GoogleSearch{}).
 			Site("numinfo.net").
 			Intext(number.International).
@@ -252,7 +248,7 @@ func getSocialMediaDorks(number *Number, formats ...string) (results []*GoogleSe
 }
 
 func getReputationDorks(number *Number, formats ...string) (results []*GoogleSearchDork) {
-	var dorks= []*dorkgen.GoogleSearch{
+	var dorks = []*dorkgen.GoogleSearch{
 		(&dorkgen.GoogleSearch{}).
 			Site("whosenumber.info").
 			Intext(number.E164).
@@ -309,6 +305,63 @@ func getReputationDorks(number *Number, formats ...string) (results []*GoogleSea
 	return results
 }
 
+func getGeneralDorks(number *Number, formats ...string) (results []*GoogleSearchDork) {
+	var dorks = []*dorkgen.GoogleSearch{
+		(&dorkgen.GoogleSearch{}).
+			Intext(number.International).
+			Or().
+			Intext(number.E164).
+			Or().
+			Intext(number.Local),
+		(&dorkgen.GoogleSearch{}).
+			Group((&dorkgen.GoogleSearch{}).
+				Intext(number.International).
+				Or().
+				Intext(number.E164).
+				Or().
+				Intext(number.Local).ToString()).
+			Ext("doc").
+			Or().
+			Ext("docx").
+			Or().
+			Ext("odt").
+			Or().
+			Ext("pdf").
+			Or().
+			Ext("rtf").
+			Or().
+			Ext("sxw").
+			Or().
+			Ext("psw").
+			Or().
+			Ext("ppt").
+			Or().
+			Ext("pptx").
+			Or().
+			Ext("pps").
+			Or().
+			Ext("csv").
+			Or().
+			Ext("txt").
+			Or().
+			Ext("xls"),
+	}
+
+	for _, dork := range dorks {
+		for _, f := range formats {
+			dork.Or().Intext(f)
+		}
+
+		results = append(results, &GoogleSearchDork{
+			Number: number.E164,
+			Dork:   dork.ToString(),
+			URL:    dork.ToURL(),
+		})
+	}
+
+	return results
+}
+
 // GoogleSearchScan creates several Google requests to search footprints of
 // the number online through Google search.
 func GoogleSearchScan(number *Number, formats ...string) (results GoogleSearchResponse) {
@@ -318,6 +371,7 @@ func GoogleSearchScan(number *Number, formats ...string) (results GoogleSearchRe
 	results.Reputation = getReputationDorks(number)
 	results.Individuals = getIndividualsDorks(number)
 	results.DisposableProviders = getDisposableProvidersDorks(number)
+	results.General = getGeneralDorks(number)
 
 	return results
 }

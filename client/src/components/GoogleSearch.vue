@@ -14,7 +14,31 @@
     >
 
     <b-collapse id="googlesearch-collapse" class="mt-2">
-      <div>
+      <div class="my-3">
+        <h4>
+          General footprints
+          <small>
+            <b-button
+              variant="outline-primary"
+              size="sm"
+              v-on:click="openLinks(data.general)"
+              >Open all links</b-button
+            >
+          </small>
+        </h4>
+
+        <b-list-group>
+          <b-list-group-item
+            :href="value.URL"
+            target="blank"
+            v-for="(value, i) in data.general"
+            v-bind:key="i"
+            >{{ value.dork }}</b-list-group-item
+          >
+        </b-list-group>
+      </div>
+
+      <div class="my-3">
         <h4>
           Social networks footprints
           <small>
@@ -38,7 +62,7 @@
         </b-list-group>
       </div>
 
-      <div>
+      <div class="my-3">
         <h4>
           Individual footprints
           <small>
@@ -62,7 +86,7 @@
         </b-list-group>
       </div>
 
-      <div>
+      <div class="my-3">
         <h4>
           Reputation footprints
           <small>
@@ -86,7 +110,7 @@
         </b-list-group>
       </div>
 
-      <div>
+      <div class="my-3">
         <h4>
           Temporary number providers footprints
           <small>
@@ -124,6 +148,7 @@ interface GoogleSearchScanResponse {
   disposableProviders: GoogleSearchDork[];
   reputation: GoogleSearchDork[];
   individuals: GoogleSearchDork[];
+  general: GoogleSearchDork[];
 }
 
 interface GoogleSearchDork {
@@ -140,7 +165,8 @@ export default class GoogleSearch extends Vue {
     socialMedia: [],
     disposableProviders: [],
     reputation: [],
-    individuals: []
+    individuals: [],
+    general: []
   };
   loading = false;
   computed = {
@@ -159,7 +185,8 @@ export default class GoogleSearch extends Vue {
       socialMedia: [],
       disposableProviders: [],
       reputation: [],
-      individuals: []
+      individuals: [],
+      general: []
     };
   }
 
