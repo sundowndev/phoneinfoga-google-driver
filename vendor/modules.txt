@@ -44,8 +44,8 @@ github.com/pkg/errors
 github.com/spf13/cobra
 # github.com/spf13/pflag v1.0.5
 github.com/spf13/pflag
-# github.com/sundowndev/go-covermyass v0.1.1
-github.com/sundowndev/go-covermyass/utils
+# github.com/sundowndev/dorkgen v1.0.0
+github.com/sundowndev/dorkgen
 # github.com/ugorji/go/codec v1.1.7
 github.com/ugorji/go/codec
 # golang.org/x/net v0.0.0-20200202094626-16171245cfb2

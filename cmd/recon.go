@@ -2,8 +2,7 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
-	"github.com/sundowndev/phoneinfoga/scanners"
-	"github.com/sundowndev/phoneinfoga/utils"
+	"github.com/sundowndev/phoneinfoga/pkg/utils"
 )
 
 func init() {
@@ -22,7 +21,7 @@ var reconCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		utils.LoggerService.Infoln("Custom recon for phone number", number)
 
-		scanners.ScanCLI(number)
+		utils.LoggerService.Errorln("Not implemented yet.")
 
 		utils.LoggerService.Infoln("Job finished.")
 	},

@@ -7,6 +7,9 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// Version is the current version of the tool
+const Version = "v1.0.0"
+
 var number string
 var input string  // TODO
 var output string // TODO

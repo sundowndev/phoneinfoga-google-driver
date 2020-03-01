@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
-	api "github.com/sundowndev/phoneinfoga/gui"
+	api "github.com/sundowndev/phoneinfoga/api"
 )
 
 var httpPort int

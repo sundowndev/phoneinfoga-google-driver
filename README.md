@@ -29,6 +29,8 @@
   <a href="https://medium.com/@SundownDEV/phone-number-scanning-osint-recon-tool-6ad8f0cac27b">Related blog post</a>
 </p>
 
+![](./docs/screenshot.png)
+
 ## About
 
 PhoneInfoga is one of the most advanced tools to scan phone numbers using only free resources. The goal is to first gather standard information such as country, area, carrier and line type on any international phone numbers with a very good accuracy. Then search for footprints on search engines to try to find the VoIP provider or identify the owner.
@@ -41,8 +43,9 @@ PhoneInfoga is one of the most advanced tools to scan phone numbers using only f
 - Check for reputation reports, social media, disposable numbers and more
 - Scan several numbers at once
 - Use custom formatting for more effective OSINT reconnaissance
-- Automatic footprinting on several custom formats
-- **NEW**: Serve a web GUI to inspect results from the browser
+- **NEW**: Serve a web client along with a REST API to run scans from the browser
+- **NEW**: Run your own web instance as a service
+- **NEW**: Programmatic usage with Go modules
 
 ![Footprinting process](https://i.imgur.com/qCkgzz8.png)
 
