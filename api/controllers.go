@@ -6,6 +6,10 @@ import (
 	"github.com/sundowndev/phoneinfoga/pkg/utils"
 )
 
+type scanResultResponse struct {
+	Result interface{} `json:"result"`
+}
+
 func getAllNumbers(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"numbers": []scanners.Number{},
@@ -23,8 +27,8 @@ func localScan(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{
-		"result": result,
+	c.JSON(200, scanResultResponse{
+		Result: result,
 	})
 }
 
@@ -39,8 +43,8 @@ func numverifyScan(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{
-		"result": result,
+	c.JSON(200, scanResultResponse{
+		Result: result,
 	})
 }
 
@@ -57,8 +61,8 @@ func googleSearchScan(c *gin.Context) {
 
 	result := scanners.GoogleSearchScan(n)
 
-	c.JSON(200, gin.H{
-		"result": result,
+	c.JSON(200, scanResultResponse{
+		Result: result,
 	})
 }
 
