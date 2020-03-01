@@ -6,10 +6,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func successResponse() map[string]interface{} {
+func successResponse(msg ...string) map[string]interface{} {
+	var message string
+
+	if len(msg) == 0 {
+		message = "An error occurred"
+	} else {
+		message = strings.Join(msg, "")
+	}
+
 	return gin.H{
 		"success": true,
-		"message": nil,
+		"message": message,
 	}
 }
 
