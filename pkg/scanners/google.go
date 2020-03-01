@@ -251,7 +251,7 @@ func getReputationDorks(number *Number) []*dorkgen.GoogleSearch {
 
 // GoogleSearchScan creates several Google requests to search footprints of
 // the number online through Google search.
-func GoogleSearchScan(number *Number) []*GoogleSearchDork {
+func GoogleSearchScan(number *Number, formats ...string) []*GoogleSearchDork {
 	utils.LoggerService.Infoln("Generating Google search dork requests...")
 
 	dorks := []*dorkgen.GoogleSearch{}
@@ -263,6 +263,10 @@ func GoogleSearchScan(number *Number) []*GoogleSearchDork {
 	results := []*GoogleSearchDork{}
 
 	for _, dork := range dorks {
+		for _, f := range formats {
+			dork.Or().Intext(f)
+		}
+
 		results = append(results, &GoogleSearchDork{
 			Number: number.E164,
 			Dork:   dork.ToString(),
