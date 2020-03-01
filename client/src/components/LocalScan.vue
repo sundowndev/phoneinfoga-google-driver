@@ -6,7 +6,6 @@
 
     <b-table
       outlined
-      :stacked="data.length == 1"
       :items="data"
       v-show="data.length > 0"
     ></b-table>

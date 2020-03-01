@@ -25,6 +25,7 @@ func localScanCLI(number string) *Number {
 	}
 
 	utils.LoggerService.Successln("Local format:", scan.Local)
+	utils.LoggerService.Successln("E164 format:", scan.E164)
 	utils.LoggerService.Successln("International format:", scan.International)
 	utils.LoggerService.Successf("Country found: +%v (%v)", scan.CountryCode, scan.Country)
 	utils.LoggerService.Successln("Carrier:", scan.Carrier)
