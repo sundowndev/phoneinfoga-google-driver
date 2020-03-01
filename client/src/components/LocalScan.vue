@@ -29,7 +29,7 @@ export default class GoogleSearch extends Vue {
     ...mapMutations(["pushError"])
   };
 
-  @Prop() scan: Vue;
+  @Prop() scan!: Vue;
 
   mounted() {
     this.scan.$on("scan", this.run);

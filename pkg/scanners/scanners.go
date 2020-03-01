@@ -55,7 +55,23 @@ func numverifyScanCLI(number string) {
 func googlesearchScanCLI(number *Number) {
 	scan := GoogleSearchScan(number)
 
-	for _, dork := range scan {
+	utils.LoggerService.Infoln("Social media footprints")
+	for _, dork := range scan.SocialMedia {
+		utils.LoggerService.Successf(`Link: %v`, dork.URL)
+	}
+
+	utils.LoggerService.Infoln("Individual footprints")
+	for _, dork := range scan.Individuals {
+		utils.LoggerService.Successf(`Link: %v`, dork.URL)
+	}
+
+	utils.LoggerService.Infoln("Reputation footprints")
+	for _, dork := range scan.Reputation {
+		utils.LoggerService.Successf(`Link: %v`, dork.URL)
+	}
+
+	utils.LoggerService.Infoln("Temporary number providers footprints")
+	for _, dork := range scan.DisposableProviders {
 		utils.LoggerService.Successf(`Link: %v`, dork.URL)
 	}
 }

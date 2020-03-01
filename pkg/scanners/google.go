@@ -12,8 +12,16 @@ type GoogleSearchDork struct {
 	URL    string
 }
 
-func getDisposableProvidersDorks(number *Number) []*dorkgen.GoogleSearch {
-	return []*dorkgen.GoogleSearch{
+// GoogleSearchResponse ...
+type GoogleSearchResponse struct {
+	SocialMedia []*GoogleSearchDork `json:"socialMedia"`
+	DisposableProviders []*GoogleSearchDork `json:"disposableProviders"`
+	Reputation []*GoogleSearchDork `json:"reputation"`
+	Individuals []*GoogleSearchDork `json:"individuals"`
+}
+
+func getDisposableProvidersDorks(number *Number) (results []*GoogleSearchDork) {
+	var dorks= []*dorkgen.GoogleSearch{
 		(&dorkgen.GoogleSearch{}).
 			Site("hs3x.com").
 			Intext(number.International),
@@ -118,10 +126,20 @@ func getDisposableProvidersDorks(number *Number) []*dorkgen.GoogleSearch {
 			Or().
 			Intext(number.Local),
 	}
+
+	for _, dork := range dorks {
+		results = append(results, &GoogleSearchDork{
+			Number: number.E164,
+			Dork:   dork.ToString(),
+			URL:    dork.ToURL(),
+		})
+	}
+
+	return results
 }
 
-func getIndividualsDorks(number *Number) []*dorkgen.GoogleSearch {
-	return []*dorkgen.GoogleSearch{
+func getIndividualsDorks(number *Number, formats ...string) (results []*GoogleSearchDork) {
+	var dorks= []*dorkgen.GoogleSearch{
 		(&dorkgen.GoogleSearch{}).
 			Intext(number.International).
 			Or().
@@ -170,10 +188,24 @@ func getIndividualsDorks(number *Number) []*dorkgen.GoogleSearch {
 			Site("spytox.com").
 			Intext(number.Local),
 	}
+
+	for _, dork := range dorks {
+		for _, f := range formats {
+			dork.Or().Intext(f)
+		}
+
+		results = append(results, &GoogleSearchDork{
+			Number: number.E164,
+			Dork:   dork.ToString(),
+			URL:    dork.ToURL(),
+		})
+	}
+
+	return results
 }
 
-func getSocialMediaDorks(number *Number) []*dorkgen.GoogleSearch {
-	return []*dorkgen.GoogleSearch{
+func getSocialMediaDorks(number *Number, formats ...string) (results []*GoogleSearchDork) {
+	var dorks = []*dorkgen.GoogleSearch{
 		(&dorkgen.GoogleSearch{}).
 			Site("facebook.com").
 			Intext(number.International).
@@ -203,10 +235,24 @@ func getSocialMediaDorks(number *Number) []*dorkgen.GoogleSearch {
 			Or().
 			Intext(number.Local),
 	}
+
+	for _, dork := range dorks {
+		for _, f := range formats {
+			dork.Or().Intext(f)
+		}
+
+		results = append(results, &GoogleSearchDork{
+			Number: number.E164,
+			Dork:   dork.ToString(),
+			URL:    dork.ToURL(),
+		})
+	}
+
+	return results
 }
 
-func getReputationDorks(number *Number) []*dorkgen.GoogleSearch {
-	return []*dorkgen.GoogleSearch{
+func getReputationDorks(number *Number, formats ...string) (results []*GoogleSearchDork) {
+	var dorks= []*dorkgen.GoogleSearch{
 		(&dorkgen.GoogleSearch{}).
 			Site("whosenumber.info").
 			Intext(number.E164).
@@ -247,20 +293,6 @@ func getReputationDorks(number *Number) []*dorkgen.GoogleSearch {
 			Site("uk.popularphotolook.com").
 			Inurl(number.Local),
 	}
-}
-
-// GoogleSearchScan creates several Google requests to search footprints of
-// the number online through Google search.
-func GoogleSearchScan(number *Number, formats ...string) []*GoogleSearchDork {
-	utils.LoggerService.Infoln("Generating Google search dork requests...")
-
-	dorks := []*dorkgen.GoogleSearch{}
-	dorks = append(dorks, getIndividualsDorks(number)...)
-	dorks = append(dorks, getSocialMediaDorks(number)...)
-	dorks = append(dorks, getReputationDorks(number)...)
-	dorks = append(dorks, getDisposableProvidersDorks(number)...)
-
-	results := []*GoogleSearchDork{}
 
 	for _, dork := range dorks {
 		for _, f := range formats {
@@ -273,6 +305,19 @@ func GoogleSearchScan(number *Number, formats ...string) []*GoogleSearchDork {
 			URL:    dork.ToURL(),
 		})
 	}
+
+	return results
+}
+
+// GoogleSearchScan creates several Google requests to search footprints of
+// the number online through Google search.
+func GoogleSearchScan(number *Number, formats ...string) (results GoogleSearchResponse) {
+	utils.LoggerService.Infoln("Generating Google search dork requests...")
+
+	results.SocialMedia = getSocialMediaDorks(number)
+	results.Reputation = getReputationDorks(number)
+	results.Individuals = getIndividualsDorks(number)
+	results.DisposableProviders = getDisposableProvidersDorks(number)
 
 	return results
 }
