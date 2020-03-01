@@ -1,7 +1,5 @@
-import axios, { AxiosResponse } from "axios";
 import Vue from "vue";
 import Vuex, { Store } from "vuex";
-import config from "@/config";
 
 Vue.use(Vuex);
 
@@ -35,20 +33,6 @@ const store: Store<StoreInterface> = new Vuex.Store({
   },
   getters: {},
   actions: {
-    async runScanner(
-      context,
-      scanner: string
-    ): Promise<AxiosResponse<unknown> | void> {
-      try {
-        const res = await axios.get(
-          `${config.apiUrl}/numbers/${context.state.number}/scan/${scanner}`
-        );
-
-        return res.data;
-      } catch (e) {
-        context.commit("pushError", { message: e });
-      }
-    },
     resetState(context): void {
       context.commit("resetState");
     }

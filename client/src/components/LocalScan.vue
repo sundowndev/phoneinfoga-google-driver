@@ -1,21 +1,15 @@
 <template>
   <div v-if="loading || data.length > 0">
-    <h3>{{ name }}</h3>
+    <h3>{{ name }} <b-spinner v-if="loading" type="grow"></b-spinner></h3>
 
-    <i v-if="loading">Loading...</i>
-
-    <b-table
-      outlined
-      :items="data"
-      v-show="data.length > 0"
-    ></b-table>
+    <b-table outlined :items="data" v-show="data.length > 0"></b-table>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Prop } from "vue-property-decorator";
 import axios, { AxiosResponse } from "axios";
-import { mapMutations } from "vuex";
+import { mapState, mapMutations } from "vuex";
 import config from "@/config";
 
 interface LocalScanResponse {
@@ -31,15 +25,27 @@ export default class GoogleSearch extends Vue {
   data: LocalScanResponse[] = [];
   loading = false;
   computed = {
+    ...mapState(["number"]),
     ...mapMutations(["pushError"])
   };
 
-  public async created(): Promise<void> {
+  @Prop() scan: Vue;
+
+  mounted() {
+    this.scan.$on("scan", this.run);
+    this.scan.$on("clear", this.clear);
+  }
+
+  private clear() {
+    this.data = [];
+  }
+
+  private async run(): Promise<void> {
     this.loading = true;
 
     try {
       const res: AxiosResponse = await axios.get(
-        `${config.apiUrl}/numbers/13152841580/scan/${this.id}`
+        `${config.apiUrl}/numbers/${this.$store.state.number}/scan/${this.id}`
       );
 
       this.data.push(res.data.result);
