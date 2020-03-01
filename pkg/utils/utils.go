@@ -3,7 +3,6 @@ package utils
 import (
 	"os"
 	"regexp"
-	"strings"
 
 	phoneiso3166 "github.com/onlinecity/go-phone-iso3166"
 )
@@ -11,20 +10,17 @@ import (
 // FormatNumber formats a phone number to remove
 // unnecessary chars and avoid dealing with unwanted input.
 func FormatNumber(n string) string {
-	n = strings.ReplaceAll(n, "+", "")
-	n = strings.ReplaceAll(n, "-", "")
-	n = strings.ReplaceAll(n, "(", "")
-	n = strings.ReplaceAll(n, ")", "")
-	n = strings.ReplaceAll(n, " ", "")
+	re := regexp.MustCompile(`(?:\+)?(?:[^[0-9]*)`)
+	number := re.ReplaceAllString(n, "")
 
-	re := regexp.MustCompile("^[0-9]+$")
+	re = regexp.MustCompile("^[0-9]+$")
 
-	if len(re.FindString(n)) == 0 {
+	if len(re.FindString(number)) == 0 {
 		LoggerService.Errorln("Number is not valid.")
 		os.Exit(0)
 	}
 
-	return n
+	return number
 }
 
 // ParseCountryCode parses a phone number and returns ISO country code.
