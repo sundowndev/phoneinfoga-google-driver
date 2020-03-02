@@ -1,16 +1,17 @@
 package api
 
 import (
+	"log"
 	"net/http"
-	"os"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gobuffalo/packr"
 )
 
 // Serve launches the web client
 // Using Gin & Vue.js
-func Serve(port int) {
+func Serve(port int) *gin.Engine {
 	httpPort := ":" + strconv.Itoa(port)
 
 	router := gin.Default()
@@ -22,20 +23,23 @@ func Serve(port int) {
 		GET("/numbers/:number/scan/numverify", ValidateScanURL, numverifyScan).
 		GET("/numbers/:number/scan/googlesearch", ValidateScanURL, googleSearchScan)
 
-	dir, _ := os.Getwd()
-	assetsPath := dir + "/client/dist"
+	box := packr.NewBox("../client/dist")
 
-	router.Group("/").
-		Static("/js", assetsPath+"/js").
-		Static("/css", assetsPath+"/css").
-		Static("/img", assetsPath+"/img")
-
-	router.StaticFile("/favicon.ico", assetsPath+"/favicon.ico")
-	router.LoadHTMLFiles(assetsPath + "/index.html")
+	router.Group("/static").
+		StaticFS("/", box)
 
 	router.GET("/", func(c *gin.Context) {
+		html, err := box.Find("index.html")
+
+		if err != nil {
+			log.Fatal()
+		}
+
 		c.Header("Content-Type", "text/html; charset=utf-8")
-		c.HTML(http.StatusOK, "index.html", gin.H{})
+		c.Writer.WriteHeader(http.StatusOK)
+		c.Writer.Write([]byte(html))
+
+		return
 	})
 
 	router.Use(func(c *gin.Context) {
@@ -46,4 +50,6 @@ func Serve(port int) {
 	})
 
 	router.Run(httpPort)
+
+	return router
 }
