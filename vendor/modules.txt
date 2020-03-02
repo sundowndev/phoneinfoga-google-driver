@@ -1,3 +1,5 @@
+# github.com/davecgh/go-spew v1.1.1
+github.com/davecgh/go-spew/spew
 # github.com/fatih/color v1.9.0
 github.com/fatih/color
 # github.com/gin-contrib/sse v0.1.0
@@ -40,11 +42,15 @@ github.com/onlinecity/go-phone-iso3166
 github.com/parnurzeal/gorequest
 # github.com/pkg/errors v0.9.1
 github.com/pkg/errors
+# github.com/pmezard/go-difflib v1.0.0
+github.com/pmezard/go-difflib/difflib
 # github.com/spf13/cobra v0.0.5
 github.com/spf13/cobra
 # github.com/spf13/pflag v1.0.5
 github.com/spf13/pflag
-# github.com/sundowndev/dorkgen v1.0.0
+# github.com/stretchr/testify v1.5.1
+github.com/stretchr/testify/assert
+# github.com/sundowndev/dorkgen v1.0.1
 github.com/sundowndev/dorkgen
 # github.com/ugorji/go/codec v1.1.7
 github.com/ugorji/go/codec
