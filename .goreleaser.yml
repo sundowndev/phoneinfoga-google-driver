@@ -1,7 +1,7 @@
 before:
     # Templates for the commands to be ran.
     hooks:
-    - apk install yarn
+    - curl -o- -L https://yarnpkg.com/install.sh | bash
     - cd client
     - yarn
     - yarn build
