@@ -2,7 +2,7 @@ before:
     # Templates for the commands to be ran.
     hooks:
     - go get github.com/markbates/pkger/cmd/pkger
-    - packr -z
+    - $GOPATH/bin/packr -z
 env:
     - GO111MODULE=on
 builds:
