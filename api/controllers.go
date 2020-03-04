@@ -7,7 +7,7 @@ import (
 )
 
 type scanResultResponse struct {
-	JsonResponse
+	JSONResponse
 	Result interface{} `json:"result"`
 }
 

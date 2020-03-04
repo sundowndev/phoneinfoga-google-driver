@@ -44,7 +44,7 @@ func Serve(port int) *gin.Engine {
 	})
 
 	router.Use(func(c *gin.Context) {
-		c.JSON(404, JsonResponse{
+		c.JSON(404, JSONResponse{
 			Success: false,
 			Error:   "Resource not found",
 		})

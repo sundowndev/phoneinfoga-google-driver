@@ -6,8 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// JsonResponse is the default API response type
-type JsonResponse struct {
+// JSONResponse is the default API response type
+type JSONResponse struct {
 	Success bool   `json:"success"`
 	Error   string `json:"error"`
 }
@@ -26,6 +26,6 @@ func ValidateScanURL(c *gin.Context) {
 }
 
 func errorHandling(c *gin.Context, msg string) {
-	c.JSON(http.StatusBadRequest, JsonResponse{Success: false, Error: msg})
+	c.JSON(http.StatusBadRequest, JSONResponse{Success: false, Error: msg})
 	c.Abort()
 }

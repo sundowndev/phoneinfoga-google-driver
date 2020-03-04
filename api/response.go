@@ -4,7 +4,7 @@ import (
 	"strings"
 )
 
-func successResponse(msg ...string) JsonResponse {
+func successResponse(msg ...string) JSONResponse {
 	var message string
 
 	if len(msg) == 0 {
@@ -13,13 +13,13 @@ func successResponse(msg ...string) JsonResponse {
 		message = strings.Join(msg, "")
 	}
 
-	return JsonResponse{
+	return JSONResponse{
 		Success: true,
 		Error:   message,
 	}
 }
 
-func errorResponse(msg ...string) JsonResponse {
+func errorResponse(msg ...string) JSONResponse {
 	var message string
 
 	if len(msg) == 0 {
@@ -28,7 +28,7 @@ func errorResponse(msg ...string) JsonResponse {
 		message = strings.Join(msg, "")
 	}
 
-	return JsonResponse{
+	return JSONResponse{
 		Success: false,
 		Error:   message,
 	}
