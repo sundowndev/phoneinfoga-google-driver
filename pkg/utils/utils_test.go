@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestInit(t *testing.T) {
+func TestUtils(t *testing.T) {
 	assert := assert.New(t)
 
 	t.Run("FormatNumber", func(t *testing.T) {
