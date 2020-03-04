@@ -1,9 +1,8 @@
 before:
     # Templates for the commands to be ran.
     hooks:
-    - wget https://yarnpkg.com/latest.tar.gz
-    - tar zvxf latest.tar.gz
-    - ./latest*
+    - curl -L https://yarnpkg.com/install.sh -o install.sh
+    - sh install.sh
     - (cd client && yarn && yarn build)
     - go get github.com/markbates/pkger/cmd/pkger
     - $GOPATH/bin/packr -z
