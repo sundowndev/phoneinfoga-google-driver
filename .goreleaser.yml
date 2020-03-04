@@ -1,6 +1,11 @@
 before:
     # Templates for the commands to be ran.
     hooks:
+    - apk install yarn
+    - cd client
+    - yarn
+    - yarn build
+    - cd ..
     - go get github.com/markbates/pkger/cmd/pkger
     - $GOPATH/bin/packr -z
 env:
