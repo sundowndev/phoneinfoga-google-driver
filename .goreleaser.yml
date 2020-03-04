@@ -3,7 +3,7 @@ before:
     hooks:
     - curl -L https://yarnpkg.com/install.sh -o install.sh
     - sh install.sh
-    - (cd client && yarn && yarn build)
+    - (cd client && $HOME/.yarn/bin/yarn && $HOME/.yarn/bin/yarn build)
     - go get github.com/markbates/pkger/cmd/pkger
     - $GOPATH/bin/packr -z
 env:
