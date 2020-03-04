@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// JsonResponse is the default API response type
 type JsonResponse struct {
 	Success bool   `json:"success"`
 	Error   string `json:"error"`
