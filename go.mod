@@ -1,6 +1,6 @@
 module github.com/sundowndev/phoneinfoga
 
-go 1.13
+go 1.14
 
 require (
 	github.com/elazarl/goproxy v0.0.0-20191011121108-aa519ddbe484 // indirect
