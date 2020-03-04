@@ -2,16 +2,15 @@ package scanners
 
 import (
 	"crypto/md5"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	"io"
 	"log"
-	"net/http"
-	"net/url"
+	"os"
 
+	"github.com/PuerkitoBio/goquery"
 	"github.com/parnurzeal/gorequest"
 	"github.com/sundowndev/phoneinfoga/pkg/utils"
-	// "golang.org/x/net/html"
 )
 
 // Numverify REST API response
@@ -29,52 +28,62 @@ type Numverify struct {
 }
 
 // NumverifyScan fetches Numverify's API
-func NumverifyScan(number string) (res *Numverify, err error) {
+func NumverifyScan(n string) (res *Numverify, err error) {
 	utils.LoggerService.Infoln("Running Numverify.com scan...")
 
-	_, _, errs := gorequest.New().Get("http://numverify.com/").End()
+	number, err := LocalScan(n)
+
+	if err != nil {
+		utils.LoggerService.Errorln("The number is not valid")
+		os.Exit(0)
+	}
+
+	response, _, errs := gorequest.New().Get("http://numverify.com/").End()
 	if errs != nil {
 		log.Fatal(errs)
 	}
+	defer response.Body.Close()
 
-	// doc, err := html.Parse(body)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// fmt.Println(doc)
-
-	// Then fetch infos
-	apiKey := md5.New()
-	io.WriteString(apiKey, "1")
-	safeNumber := url.QueryEscape(number)
-
-	url := fmt.Sprintf("http://apilayer.net/api/validate?access_key=%s&number=%s", apiKey.Sum(nil), safeNumber)
-
-	// Build the request
-	resp2, err := http.Get(url)
+	// Load the HTML document
+	doc, err := goquery.NewDocumentFromReader(response.Body)
 	if err != nil {
-		log.Fatal("NewRequest: ", err)
+		log.Fatal(err)
 	}
 
+	secret, _ := doc.Find("[name=\"scl_request_secret\"]").Attr("value")
+
+	// Then fetch infos
+	safeNumber := number.International
+	apiKey := md5.Sum([]byte(safeNumber + secret))
+
+	url := fmt.Sprintf("https://numverify.com/php_helper_scripts/phone_api.php?secret_key=%s&number=%s", hex.EncodeToString(apiKey[:]), safeNumber)
+
+	// Build the request
+	response2, _, errs := gorequest.New().Get(url).End()
+	if errs != nil {
+		log.Fatal(errs)
+	}
+	defer response2.Body.Close()
+
 	// Fill the response with the data from the JSON
-	var response Numverify
+	var result Numverify
 
 	// Use json.Decode for reading streams of JSON data
-	if err := json.NewDecoder(resp2.Body).Decode(&response); err != nil {
+	if err := json.NewDecoder(response2.Body).Decode(&result); err != nil {
 		log.Println(err)
 	}
 
 	res = &Numverify{
-		Valid:               response.Valid,
-		Number:              response.Number,
-		LocalFormat:         response.LocalFormat,
-		InternationalFormat: response.InternationalFormat,
-		CountryPrefix:       response.CountryPrefix,
-		CountryCode:         response.CountryCode,
-		CountryName:         response.CountryName,
-		Location:            response.Location,
-		Carrier:             response.Carrier,
-		LineType:            response.LineType,
+		Valid:               result.Valid,
+		Number:              result.Number,
+		LocalFormat:         result.LocalFormat,
+		InternationalFormat: result.InternationalFormat,
+		CountryPrefix:       result.CountryPrefix,
+		CountryCode:         result.CountryCode,
+		CountryName:         result.CountryName,
+		Location:            result.Location,
+		Carrier:             result.Carrier,
+		LineType:            result.LineType,
 	}
 
 	return res, nil

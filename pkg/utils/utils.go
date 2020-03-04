@@ -10,7 +10,7 @@ import (
 // FormatNumber formats a phone number to remove
 // unnecessary chars and avoid dealing with unwanted input.
 func FormatNumber(n string) string {
-	re := regexp.MustCompile(`(?:\+)?(?:[^[0-9]*)`)
+	re := regexp.MustCompile(`[_\W]+`)
 	number := re.ReplaceAllString(n, "")
 
 	re = regexp.MustCompile("^[0-9]+$")
