@@ -7,6 +7,7 @@ import (
 )
 
 type scanResultResponse struct {
+	JsonResponse
 	Result interface{} `json:"result"`
 }
 
@@ -14,6 +15,20 @@ func getAllNumbers(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"numbers": []scanners.Number{},
 	})
+}
+
+func isValid(c *gin.Context) {
+	number := c.Param("number")
+
+	number = utils.FormatNumber(number)
+	_, err := scanners.LocalScan(number)
+
+	if err != nil {
+		c.JSON(500, errorResponse("The number is not valid"))
+		return
+	}
+
+	c.JSON(200, successResponse("The number is valid"))
 }
 
 func localScan(c *gin.Context) {
@@ -67,5 +82,5 @@ func googleSearchScan(c *gin.Context) {
 }
 
 func healthHandler(c *gin.Context) {
-	c.JSON(200, successResponse())
+	c.JSON(200, successResponse("OK"))
 }

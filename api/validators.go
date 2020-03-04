@@ -6,6 +6,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type JsonResponse struct {
+	Success bool   `json:"success"`
+	Error   string `json:"error"`
+}
+
 type scanURL struct {
 	Number uint `uri:"number" binding:"required,min=1,max=999679368229"`
 }
@@ -20,6 +25,6 @@ func ValidateScanURL(c *gin.Context) {
 }
 
 func errorHandling(c *gin.Context, msg string) {
-	c.JSON(http.StatusBadRequest, gin.H{"error": msg})
+	c.JSON(http.StatusBadRequest, JsonResponse{Success: false, Error: msg})
 	c.Abort()
 }

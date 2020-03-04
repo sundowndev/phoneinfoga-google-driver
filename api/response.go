@@ -2,26 +2,24 @@ package api
 
 import (
 	"strings"
-
-	"github.com/gin-gonic/gin"
 )
 
-func successResponse(msg ...string) map[string]interface{} {
+func successResponse(msg ...string) JsonResponse {
 	var message string
 
 	if len(msg) == 0 {
-		message = "An error occurred"
+		message = ""
 	} else {
 		message = strings.Join(msg, "")
 	}
 
-	return gin.H{
-		"success": true,
-		"message": message,
+	return JsonResponse{
+		Success: true,
+		Error:   message,
 	}
 }
 
-func errorResponse(msg ...string) map[string]interface{} {
+func errorResponse(msg ...string) JsonResponse {
 	var message string
 
 	if len(msg) == 0 {
@@ -30,8 +28,8 @@ func errorResponse(msg ...string) map[string]interface{} {
 		message = strings.Join(msg, "")
 	}
 
-	return gin.H{
-		"success": false,
-		"message": message,
+	return JsonResponse{
+		Success: false,
+		Error:   message,
 	}
 }

@@ -19,6 +19,7 @@ func Serve(port int) *gin.Engine {
 	router.Group("/api").
 		GET("/", healthHandler).
 		GET("/numbers", getAllNumbers).
+		GET("/numbers/:number/validate", ValidateScanURL, isValid).
 		GET("/numbers/:number/scan/local", ValidateScanURL, localScan).
 		GET("/numbers/:number/scan/numverify", ValidateScanURL, numverifyScan).
 		GET("/numbers/:number/scan/googlesearch", ValidateScanURL, googleSearchScan)
@@ -43,9 +44,9 @@ func Serve(port int) *gin.Engine {
 	})
 
 	router.Use(func(c *gin.Context) {
-		c.JSON(404, gin.H{
-			"success": false,
-			"message": "Resource not found",
+		c.JSON(404, JsonResponse{
+			Success: false,
+			Error:   "Resource not found",
 		})
 	})
 
