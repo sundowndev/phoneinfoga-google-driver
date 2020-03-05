@@ -29,7 +29,7 @@
   <a href="https://medium.com/@SundownDEV/phone-number-scanning-osint-recon-tool-6ad8f0cac27b">Related blog post</a>
 </p>
 
-![](./docs/screenshot.png)
+![](./docs/images/screenshot.png)
 
 ## About
 
