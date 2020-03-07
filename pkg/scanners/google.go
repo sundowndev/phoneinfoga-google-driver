@@ -2,7 +2,6 @@ package scanners
 
 import (
 	"github.com/sundowndev/dorkgen"
-	"github.com/sundowndev/phoneinfoga/pkg/utils"
 )
 
 // GoogleSearchDork is the common format for dork requests
@@ -365,8 +364,6 @@ func getGeneralDorks(number *Number, formats ...string) (results []*GoogleSearch
 // GoogleSearchScan creates several Google requests to search footprints of
 // the number online through Google search.
 func GoogleSearchScan(number *Number, formats ...string) (results GoogleSearchResponse) {
-	utils.LoggerService.Infoln("Generating Google search dork requests...")
-
 	results.SocialMedia = getSocialMediaDorks(number)
 	results.Reputation = getReputationDorks(number)
 	results.Individuals = getIndividualsDorks(number)

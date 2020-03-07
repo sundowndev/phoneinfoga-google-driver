@@ -17,6 +17,8 @@ type Number struct {
 }
 
 func localScanCLI(number string) *Number {
+	utils.LoggerService.Infoln("Running local scan...")
+
 	scan, err := LocalScan(number)
 
 	if err != nil {
@@ -34,6 +36,8 @@ func localScanCLI(number string) *Number {
 }
 
 func numverifyScanCLI(number string) {
+	utils.LoggerService.Infoln("Running Numverify.com scan...")
+
 	scan, err := NumverifyScan(number)
 
 	if err != nil {
@@ -53,6 +57,8 @@ func numverifyScanCLI(number string) {
 }
 
 func googlesearchScanCLI(number *Number) {
+	utils.LoggerService.Infoln("Generating Google search dork requests...")
+
 	scan := GoogleSearchScan(number)
 
 	utils.LoggerService.Infoln("Social media footprints")

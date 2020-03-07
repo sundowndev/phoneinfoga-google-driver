@@ -29,8 +29,6 @@ type Numverify struct {
 
 // NumverifyScan fetches Numverify's API
 func NumverifyScan(n string) (res *Numverify, err error) {
-	utils.LoggerService.Infoln("Running Numverify.com scan...")
-
 	number, err := LocalScan(n)
 
 	if err != nil {
