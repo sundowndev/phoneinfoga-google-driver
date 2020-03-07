@@ -19,6 +19,12 @@ tar xfv phoneinfoga.tar.gz
 mv ./phoneinfoga /usr/bin/phoneinfoga
 ```
 
+## Install globally with Go
+
+```shell
+go get -u github.com/sundowndev/PhoneInfoga
+```
+
 ## Build from source
 
 Follow the instructions :
@@ -58,14 +64,19 @@ docker run --rm -it sundowndev/phoneinfoga version
 You can use a single docker-compose file to run the tool without downloading the source code.
 
 ```
-version: "3"
+version: '3.7'
 
 services:
-  phoneinfoga:
-    image: sundowndev/phoneinfoga
-    container_name: phoneinfoga
-    restart: on-failure
-    command: serve
+    phoneinfoga:
+      container_name: phoneinfoga
+      restart: on-failure
+      build:
+        context: .
+        dockerfile: Dockerfile
+      command:
+        - "serve"
+      ports:
+        - "80:5000"
 ```
 
 ### From the source code
