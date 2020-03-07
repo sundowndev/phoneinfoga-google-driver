@@ -157,7 +157,7 @@ func getIndividualsDorks(number *Number, formats ...string) (results []*GoogleSe
 			Intext(number.Local),
 		(&dorkgen.GoogleSearch{}).
 			Site("whocallsyou.de").
-			Intext("0" + number.Local),
+			Intext(number.Local),
 		(&dorkgen.GoogleSearch{}).
 			Site("pastebin.com").
 			Intext(number.International).
