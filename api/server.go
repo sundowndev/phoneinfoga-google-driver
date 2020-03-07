@@ -19,7 +19,7 @@ func Serve(port int) *gin.Engine {
 	router.Group("/api").
 		GET("/", healthHandler).
 		GET("/numbers", getAllNumbers).
-		GET("/numbers/:number/validate", ValidateScanURL, isValid).
+		GET("/numbers/:number/validate", ValidateScanURL, validate).
 		GET("/numbers/:number/scan/local", ValidateScanURL, localScan).
 		GET("/numbers/:number/scan/numverify", ValidateScanURL, numverifyScan).
 		GET("/numbers/:number/scan/googlesearch", ValidateScanURL, googleSearchScan)

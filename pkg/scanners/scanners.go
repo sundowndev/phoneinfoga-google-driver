@@ -35,7 +35,7 @@ func localScanCLI(number string) *Number {
 	return scan
 }
 
-func numverifyScanCLI(number string) {
+func numverifyScanCLI(number *Number) {
 	utils.LoggerService.Infoln("Running Numverify.com scan...")
 
 	scan, err := NumverifyScan(number)
@@ -86,6 +86,6 @@ func googlesearchScanCLI(number *Number) {
 func ScanCLI(number string) {
 	num := localScanCLI(number)
 
-	numverifyScanCLI(num.E164)
+	numverifyScanCLI(num)
 	googlesearchScanCLI(num)
 }

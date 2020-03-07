@@ -28,9 +28,7 @@ type Numverify struct {
 }
 
 // NumverifyScan fetches Numverify's API
-func NumverifyScan(n string) (res *Numverify, err error) {
-	number, err := LocalScan(n)
-
+func NumverifyScan(number *Number) (res *Numverify, err error) {
 	if err != nil {
 		utils.LoggerService.Errorln("The number is not valid")
 		os.Exit(0)
