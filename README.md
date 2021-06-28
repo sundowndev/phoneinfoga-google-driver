@@ -1,3 +1,5 @@
+⚠️ **This project was abandonned and thus will not be maintained anymore**
+
 # phoneinfoga-google-driver
 
 ![action](https://img.shields.io/endpoint.svg?url=https://actions-badge.atrox.dev/sundowndev/phoneinfoga-google-driver/badge?ref=master)
